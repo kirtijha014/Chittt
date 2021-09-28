@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css"
+        integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+     
+    <link rel="stylesheet" type="text/css" href="Appointment.css">
+    <link rel="shortcut icon" href="Assets/Mental_health_logo-02.jpg" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Book an appointment now!</h2>
+        </div>
+        <form action="" class="form" id="form">
+            <!-- Name -->
+            <div class="form-control">
+                <label>Name</label>
+                <input type="text" name="" id="username" placeholder="Enter your full name" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Message</small>
+            </div>
+            <!-- Phone Number -->
+            <div class="form-control">
+                <label>Phone Number</label>
+                <input type="number" name="phone" id="phone" placeholder="Enter your phone number" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Message</small>
+            </div>
+
+            <!-- Email -->
+            <div class="form-control">
+                <label>E-mail Address</label>
+                <input type="text" name="email" id="email" placeholder="Enter your e-mail address" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Message</small>
+            </div>
+            <!-- Appointment Date -->
+            <div class="form-control">
+                <label>Appointment Date</label>
+                <input type="datetime-local"name="roll" id="roll"value="2021-07-30T19:30" min="2021-07-30T00:00" max="2022-07-30T00:00"placeholder="Appointment Date" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Message</small>
+            </div>
+
+            <input type="submit" value="Submit" class="btn">
+        </form>
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+    <script type="text/javascript">
+        const form = document.getElementById( "form" );
+        const username = document.getElementById( "username" );
+        const phone = document.getElementById( "phone" );
+        const email = document.getElementById( "email" );
+        const roll = document.getElementById( "roll" );
+        //adding events
+        form.addEventListener( 'submit', ( event ) =>
+        {
+            event.preventDefault();
+            validate();
+
+        } )
+
+        const isEmail = ( emailVal ) =>
+        {
+            var atSymbol = emailVal.indexOf( "@" );
+            if ( atSymbol < 1 )
+                return false;
+            var dot = emailVal.lastIndexOf( '.' );
+            if ( dot < atSymbol + 2 ) {
+                return false;
+            }
+            if ( dot === emailVal.length - 1 ) {
+                return false;
+            }
+            return true;
+        }
+        //defining validate function
+
+        const validate = () =>
+        {
+            const usernameVal = username.value.trim();
+            const phoneVal = phone.value.trim();
+            const emailVal = email.value.trim();
+            const rollVal = roll.value.trim().toLowerCase();
+
+            //validate username
+            if ( usernameVal === "" ) {
+                setErrorMsg( username, 'Name cannot be blank.' );
+            } else if ( usernameVal.length <= 2 ) {
+                setErrorMsg( username, 'Name should have minimum 3 characters' );
+            }
+            else {
+                setSuccessMsg( username );
+            }
+            //validate phone number
+            if ( phoneVal === "" ) {
+                setErrorMsg( phone, 'Phone number cannot be blank.' );
+            } else if (phoneVal.length !=10) {
+                setErrorMsg( phone, 'Not a valid phone number' );
+            }
+            else {
+                setSuccessMsg( phone );
+            }
+            //validate email address
+            if ( emailVal === "" ) {
+                setErrorMsg( email, 'Email Address cannot be blank.' );
+            } else if ( !isEmail( emailVal ) ) {
+                setErrorMsg( email, 'Not a valid email address' );
+            }
+            else {
+                setSuccessMsg( email );
+            }
+            if(setSuccessMsg)
+            alert(Username+" your appointment has been set. Thank you for reaching out to us.");
+            
+            
+        }
+
+        function setErrorMsg( input, errormsg )
+        {
+            const formControl = input.parentElement;
+            const small = formControl.querySelector( 'small' );
+            formControl.className = "form-control error";
+            small.innerText = errormsg;
+        }
+        function setSuccessMsg( input, errormsg )
+        {
+            const formControl = input.parentElement;
+            const small = formControl.querySelector( 'small' );
+            formControl.className = "form-control success";
+            //small.innerText = successmsg;
+        }
+       
+    </script>
+</body>
+
+</html>
